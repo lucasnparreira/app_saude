@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular IMC</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
+                    <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
+                    <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="imc-section">
+            <h2>Calcular IMC</h2>
+        </br>
+            <form id="imc-form">
+                <label for="weight-input">Peso (kg):</label>
+                <input type="text" id="weight-input" placeholder="Digite seu peso" >
+        
+                <p><label for="height-input">Altura (m):</label>
+                <input type="text" id="height-input" placeholder="Digite sua altura" ></p>
+                </br>
+                <button id="calculate-imc-btn">Calcular IMC</button>
+                <button id="clean-imc-btn">Limpar</button>
+            </form>
+            </br>
+            <p id="imc-result"></p>
+        </section>
+        
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© Saúde & Bem-estar. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calculateImcBtn = document.getElementById('calculate-imc-btn');
+            const weightInput = document.getElementById('weight-input'); // Input field for weight (in kilograms)
+            const heightInput = document.getElementById('height-input'); // Input field for height (in meters)
+            const resultContainer = document.getElementById('imc-result');
+            const cleanImcBtn = document.getElementById('clean-imc-btn');
+            
+            cleanImcBtn.addEventListener('click', function() {
+                resultContainer.innerHTML = ''
+                weightInput.innerHTML = ''
+                heightInput.innerHTML = ''
+            });
+
+            calculateImcBtn.addEventListener('click', function () {
+                event.preventDefault();
+
+                const weight = parseFloat(weightInput.value); // Get weight value from input
+                const height = parseFloat(heightInput.value); // Get height value from input
+    
+                if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+                    resultContainer.innerHTML = 'Por favor, insira valores válidos para peso e altura.';
+                    return;
+                }
+    
+                const bmi = weight / (height * height);
+                const bmiCategory = getBmiCategory(bmi);
+    
+                resultContainer.innerHTML = `Seu IMC é ${bmi.toFixed(2)} (${bmiCategory}).`;
+            });
+    
+            function getBmiCategory(bmi) {
+                if (bmi < 18.5) {
+                    return 'Abaixo do peso';
+                } else if (bmi < 24.9) {
+                    return 'Peso normal';
+                } else if (bmi < 29.9) {
+                    return 'Sobrepeso';
+                } else {
+                    return 'Obesidade';
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

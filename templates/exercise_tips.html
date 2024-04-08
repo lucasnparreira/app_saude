@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicas de exercicios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <!-- <h1>Dicas de exercicios</h1> -->
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
+                    <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
+                    <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="exercise-tips-section">
+            <h2>Dicas de Exercicios</h2>
+            <ul id="exercise-tips-list">
+                <!-- as dicas de exercicio serao inseridas aqui via script -->
+                </br>
+                <li>Se quer começar a fazer exercício físico e não sabe como, aqui estão 10 dicas que podem ajudar:</li>
+                <li>Consulte o seu médico antes de iniciar qualquer plano de exercícios físicos, especialmente se tiver alguma condição médica ou histórico familiar de problemas cardíacos.</li>
+                <li>Defina metas realistas e específicas para o seu plano de treino como, por exemplo, caminhar 30 minutos por dia, três vezes por semana.</li>
+                <li>Escolha uma atividade física de que goste e que seja adequada ao seu nível de aptidão física, como caminhada, natação, yoga ou andar de bicicleta, por exemplo.</li>
+                <li>Comece devagar e aumente gradualmente a intensidade e a duração dos exercícios para evitar lesões ou esgotamento.</li>
+                <li>Use roupas confortáveis e calçado adequado ao exercício.</li>
+                <li>Beba água ao longo do dia, para estar sempre bem hidratado, e faça um aquecimento antes de começar os exercícios.</li>
+                <li>Acompanhe o seu progresso, registando o tempo, a distância percorrida ou as calorias queimadas num diário de exercícios.</li>
+                <li>Varie os tipos de exercícios, para evitar o tédio e o desgaste físico e mental.</li>
+                <li>Encontre um amigo ou grupo para fazerem exercícios juntos e, assim, manter a motivação e tornar a atividade física mais divertida.</li>
+                <li>Não desista! É normal encontrar obstáculos e contratempos, mas com perseverança e esforço, pode alcançar todas as metas e, assim, melhorar a sua qualidade de vida e bem-estar.</li>
+            </ul>
+            </br>
+            <button id="fetch-more-tips-btn">Buscar mais dicas</button>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Saude e Bem-estar. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const exerciseTipsList = document.getElementById('exercise-tips-list'); // Elemento onde as dicas serão exibidas
+    
+            function fetchExerciseTips() {
+                fetch('https://api.exerciseapi.com/v2/exercises')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao buscar dicas de exercicios - verifique a conexao com a internet.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Exibe as 10 novas dicas
+                        for (let i = 0; i < 10; i++) {
+                            const exercise = data[i];
+                            const listItem = document.createElement('li');
+                            listItem.innerHTML = `<strong>${exercise.name}</strong>: ${exercise.description}`;
+                            exerciseTipsList.appendChild(listItem);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar dicas de exercícios - verifique a conexao com a internet.', error);
+                        // Limpa as dicas anteriores (se houver)
+                        
+            });
+        }
+    
+            // Chama a função para buscar as dicas iniciais
+            fetchExerciseTips();
+    
+            // Escuta o evento de clique no botão
+            document.getElementById('fetch-more-tips-btn').addEventListener('click', function () {
+                // Limpa as dicas anteriores (se houver)
+                exerciseTipsList.innerHTML = '';
+                exerciseTipsList.innerHTML = '</br> Erro de acesso a API - verifique a conexao com a internet.'
+                // fetchExerciseTips();
+            });
+        });
+    </script>
+    
+    
+</body>
+</html>

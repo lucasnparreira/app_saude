@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alimentacao saudavel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <!-- <h1>Alimentacao saudavel</h1> -->
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
+                    <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
+                    <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="healthy-food-section">
+            <h2>Busca de informacoes nutricionais</h2>
+            </br>
+            <form id="food-search-form">
+                <label for="food-input">Digite o nome de um alimento: </label>
+                <input type="text" id="food-input" name="food" required>
+                <button type="submit">Buscar</button>
+            </form>
+        <div id="food-info"></div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Saude & Bem-estar. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('food-search-form').addEventListener('submit', function(event){
+            event.preventDefault();
+            const foodName = document.getElementById('food-input').value;
+            API_ID = '28af4c45232b4f8f84a300e56269bc24'
+            APP_KEY = '93d7a5c1cc46450983bd48df34cb7904'
+            fetch(`https://api.nutritionix.com/v1_1/search/${foodName}?results=0%3A1&fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat%2Cnf_protein%2Cnf_total_carbohydrate&appId=${API_ID}&appKey=${APP_KEY}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dicas de exercicios - verifique a conexao com a internet.');
+            }
+                return response.json();
+        })
+            .then(data => {
+                const foodInfo = document.getElementById('food-info');
+                if (data.hits.length > 0){
+                    const food = data.hits[0].fields;
+                    foodInfo.innerHTML = `
+                        <h3>Informacoes nutricionais para ${food.item_name}</h3>
+                        <p>Calorias: ${food.nf_calories}</p>
+                        <p>Gordura Total: ${food.nf_total_fat}g</p>
+                        <p>Proteina: ${food.nf_protein}g</p>
+                        <p>Carboidratos Totais: ${food.nf_total_carbohydrate}g</p>
+                    `;
+                } else {
+                    foodInfo.innerHTML = '<p>Nenhum resultado encontrado para o alimento digitado</p>';
+                }
+            })
+            .catch(error => console.error('Erro ao buscar informacoes nutricionais', error));
+        });
+    </script>
+</body>
+</html>
