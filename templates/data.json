@@ -1,0 +1,126 @@
+{
+    "proteina_animal": [
+      {
+        "alimento": "Carne de frango",
+        "quantidade_proteina": "32,8 g",
+        "calorias": "148 kcals"
+      },
+      {
+        "alimento": "Carne de vaca",
+        "quantidade_proteina": "26,4 g",
+        "calorias": "163 kcals"
+      },
+      {
+        "alimento": "Carne de porco (lombo)",
+        "quantidade_proteina": "22,2 g",
+        "calorias": "131 kcals"
+      },
+      {
+        "alimento": "Carne de pato",
+        "quantidade_proteina": "19,3 g",
+        "calorias": "133 kcals"
+      },
+      {
+        "alimento": "Carne de codorna",
+        "quantidade_proteina": "22,1 g",
+        "calorias": "119 kcals"
+      },
+      {
+        "alimento": "Queijos em geral",
+        "quantidade_proteina": "26 g",
+        "calorias": "316 kcals"
+      },
+      {
+        "alimento": "Salmao s/ pele, fresco, cru",
+        "quantidade_proteina": "19,3 g",
+        "calorias": "170 kcals"
+      },
+      {
+        "alimento": "Atum fresco",
+        "quantidade_proteina": "25,7 g",
+        "calorias": "118 kcals"
+      },
+      {
+        "alimento": "Bacalhau salgado cru",
+        "quantidade_proteina": "29 g",
+        "calorias": "136 kcals"
+      },
+      {
+        "alimento": "Ovo",
+        "quantidade_proteina": "13 g",
+        "calorias": "149 kcals"
+      },
+      {
+        "alimento": "Iogurte",
+        "quantidade_proteina": "4,1 g",
+        "calorias": "54 kcals"
+      },
+      {
+        "alimento": "Leite",
+        "quantidade_proteina": "3,3 g",
+        "calorias": "47 calorias"
+      }
+    ],
+    "proteina_vegetal": [
+      {
+        "alimento": "Soja",
+        "quantidade_proteina": "12,5 g",
+        "calorias": "140 kcals"
+      },
+      {
+        "alimento": "Quinoa",
+        "quantidade_proteina": "12,0 g",
+        "calorias": "335 kcals"
+      },
+      {
+        "alimento": "Trigo sarraceno",
+        "quantidade_proteina": "11,0 g",
+        "calorias": "366 kcals"
+      },
+      {
+        "alimento": "Lentilhas",
+        "quantidade_proteina": "9,1 g",
+        "calorias": "108 kcals"
+      },
+      {
+        "alimento": "Tofu",
+        "quantidade_proteina": "8,5 g",
+        "calorias": "76 kcals"
+      },
+      {
+        "alimento": "Feijão",
+        "quantidade_proteina": "6,6 g",
+        "calorias": "91 kcals"
+      },
+      {
+        "alimento": "Ervilha",
+        "quantidade_proteina": "6,2 g",
+        "calorias": "63 kcals"
+      },
+      {
+        "alimento": "Sementes de linhaça",
+        "quantidade_proteina": "14,1 g",
+        "calorias": "495 kcals"
+      },
+      {
+        "alimento": "Sementes de gergelim",
+        "quantidade_proteina": "21,2 g",
+        "calorias": "584 kcals"
+      },
+      {
+        "alimento": "Grão de bico",
+        "quantidade_proteina": "21,2 g",
+        "calorias": "355 kcals"
+      },
+      {
+        "alimento": "Amendoim",
+        "quantidade_proteina": "25,4 g",
+        "calorias": "589 kcals"
+      },
+      {
+        "alimento": "Nozes",
+        "quantidade_proteina": "16,7 g",
+        "calorias": "699 kcals"
+      }
+    ]
+  }

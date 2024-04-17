@@ -20,32 +20,39 @@
         </div>
     </header>
 
-    <div class="container">
-        <section class="imc-section">
-            <h2>Calcular IMC</h2>
-        </br>
-            <form id="imc-form">
-                <label for="weight-input">Peso (kg):</label>
-                <input type="text" id="weight-input" placeholder="Digite seu peso" >
-        
-                <p><label for="height-input">Altura (m):</label>
-                <input type="text" id="height-input" placeholder="Digite sua altura" ></p>
-                </br>
-                <button id="calculate-imc-btn">Calcular IMC</button>
-                <button id="clean-imc-btn">Limpar</button>
-            </form>
-            </br>
-            <p id="imc-result"></p>
-        </section>
-        
-    </div>
-
-    <footer class="footer">
+    <div class="body-imc">
         <div class="container">
-            <p>© Saúde & Bem-estar. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+            <section class="intro-imc">
+                <h3>IMC</h3>
+                <br>
+                O Índice de Massa Corporal (IMC) é um parâmetro utilizado para avaliar o peso corporal e determinar se uma pessoa está dentro do peso considerado ideal para sua altura. Ele é amplamente utilizado por profissionais de saúde, como médicos, nutricionistas, educadores físicos e enfermeiros, para avaliar rapidamente se alguém está com o peso adequado ou se precisa ganhar ou perder peso.
+            </section>
 
+            <section class="imc-section">
+                <h3>Calcular IMC</h3>
+            </br>
+                <form id="imc-form">
+                    <label for="weight-input">Peso(kg):</label>
+                    <input type="text" id="weight-input" placeholder="Digite seu peso" >
+            
+                    <p><label for="height-input">Altura(m):</label>
+                    <input type="text" id="height-input" placeholder="Digite sua altura" ></p>
+                    </br>
+                    <button id="calculate-imc-btn">Calcular IMC</button>
+                    <button id="clean-imc-btn">Limpar</button>
+                </form>
+                </br>
+                <p id="imc-result"></p>
+            </section>
+            
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>© Saúde & Bem-estar. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const calculateImcBtn = document.getElementById('calculate-imc-btn');

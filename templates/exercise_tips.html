@@ -21,35 +21,39 @@
         </div>
     </header>
 
-    <div class="container">
-        <section class="exercise-tips-section">
-            <h2>Dicas de Exercicios</h2>
-            <ul id="exercise-tips-list">
-                <!-- as dicas de exercicio serao inseridas aqui via script -->
-                </br>
-                <li>Se quer começar a fazer exercício físico e não sabe como, aqui estão 10 dicas que podem ajudar:</li>
-                <li>Consulte o seu médico antes de iniciar qualquer plano de exercícios físicos, especialmente se tiver alguma condição médica ou histórico familiar de problemas cardíacos.</li>
-                <li>Defina metas realistas e específicas para o seu plano de treino como, por exemplo, caminhar 30 minutos por dia, três vezes por semana.</li>
-                <li>Escolha uma atividade física de que goste e que seja adequada ao seu nível de aptidão física, como caminhada, natação, yoga ou andar de bicicleta, por exemplo.</li>
-                <li>Comece devagar e aumente gradualmente a intensidade e a duração dos exercícios para evitar lesões ou esgotamento.</li>
-                <li>Use roupas confortáveis e calçado adequado ao exercício.</li>
-                <li>Beba água ao longo do dia, para estar sempre bem hidratado, e faça um aquecimento antes de começar os exercícios.</li>
-                <li>Acompanhe o seu progresso, registando o tempo, a distância percorrida ou as calorias queimadas num diário de exercícios.</li>
-                <li>Varie os tipos de exercícios, para evitar o tédio e o desgaste físico e mental.</li>
-                <li>Encontre um amigo ou grupo para fazerem exercícios juntos e, assim, manter a motivação e tornar a atividade física mais divertida.</li>
-                <li>Não desista! É normal encontrar obstáculos e contratempos, mas com perseverança e esforço, pode alcançar todas as metas e, assim, melhorar a sua qualidade de vida e bem-estar.</li>
-            </ul>
-            </br>
-            <button id="fetch-more-tips-btn">Buscar mais dicas</button>
-        </section>
-    </div>
-
-    <footer class="footer">
+    <div class="body-exercice-tips">
         <div class="container">
-            <p>&copy; Saude e Bem-estar. Todos os direitos reservados.</p>
+            <section class="exercise-tips-section">
+                <h3>Dicas de Exercicios</h3>
+                <ul id="exercise-tips-list">
+                    <!-- as dicas de exercicio serao inseridas aqui via script -->
+                    </br>
+                    Se quer começar a fazer exercício físico e não sabe como, aqui estão 10 dicas que podem ajudar:
+                    <ul class="ul-dicas-exercicios">
+                        <li>Consulte o seu médico antes de iniciar qualquer plano de exercícios físicos, especialmente se tiver alguma condição médica ou histórico familiar de problemas cardíacos.</li>
+                        <li>Defina metas realistas e específicas para o seu plano de treino como, por exemplo, caminhar 30 minutos por dia, três vezes por semana.</li>
+                        <li>Escolha uma atividade física de que goste e que seja adequada ao seu nível de aptidão física, como caminhada, natação, yoga ou andar de bicicleta, por exemplo.</li>
+                        <li>Comece devagar e aumente gradualmente a intensidade e a duração dos exercícios para evitar lesões ou esgotamento.</li>
+                        <li>Use roupas confortáveis e calçado adequado ao exercício.</li>
+                        <li>Beba água ao longo do dia, para estar sempre bem hidratado, e faça um aquecimento antes de começar os exercícios.</li>
+                        <li>Acompanhe o seu progresso, registando o tempo, a distância percorrida ou as calorias queimadas num diário de exercícios.</li>
+                        <li>Varie os tipos de exercícios, para evitar o tédio e o desgaste físico e mental.</li>
+                        <li>Encontre um amigo ou grupo para fazerem exercícios juntos e, assim, manter a motivação e tornar a atividade física mais divertida.</li>
+                        <li>Não desista! É normal encontrar obstáculos e contratempos, mas com perseverança e esforço, pode alcançar todas as metas e, assim, melhorar a sua qualidade de vida e bem-estar.</li>
+                    </ul>
+                </ul>
+                </br>
+                <button id="fetch-more-tips-btn">Buscar mais dicas</button>
+            </section>
         </div>
-    </footer>
 
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; Saude e Bem-estar. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const exerciseTipsList = document.getElementById('exercise-tips-list'); // Elemento onde as dicas serão exibidas

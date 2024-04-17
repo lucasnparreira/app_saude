@@ -1,6 +1,10 @@
+import json
 import os
-from flask import Flask, render_template, request, redirect, url_for
-from models import db, IMCResult
+from urllib import response
+from flask import Flask, jsonify, render_template, request, redirect, url_for
+from googlesearch import search
+
+import requests
 
 app = Flask(__name__)
 template_dir = os.path.abspath('templates')
@@ -26,39 +30,28 @@ def calculate_imc():
 
     return render_template('calculate_imc.html')
 
-def calculate_bmi(weight, height):
-    return weight / (height ** 2)
+# def calculate_bmi(weight, height):
+#     return weight / (height ** 2)
 
 @app.route('/healthy_food.html')
 def healthy_food():
-    return render_template('healthy_food.html')
+    # Carregue os dados do arquivo data.json
+    with open('templates\data.json', 'r') as arquivo_json:
+        dados = json.load(arquivo_json)
+    return render_template('healthy_food.html', alimentos=dados['proteina_animal'])
 
-@app.route('/api/food_info', methods = ['POST'])
-def food_info():
-    food_name = request.json.get('food')
-    app_id = ''
-    app_key = ''
+@app.route('/api/data', methods=['GET'])
+def get_data():
+    # Sua lógica para obter dados
 
-    request = requests.get(f'https://api.nutritionix.com/v1_1/search/{food_name}?results=0%3A1&fields=item)name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat%2Cnf_protein%2Cnf_total_carbohydrate&appId={app_id}&appkey={app_key}')
+    # Configuração dos cabeçalhos CORS
+    response = jsonify({'data': 'Dados obtidos com sucesso!'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Methods', 'GET')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
 
-    if response.status_code == 200:
-        data = response.json()
-        if data['hits']:
-            food = data['hits'][0]['fields']
-            food_info = {
-                'name' : food['item_name'],
-                'calories' : food['nf_calories'],
-                'total_fat' : food['nf_total_fat'],
-                'protein' : food['nf_protein'],
-                'total_carbohydrate' : food['nf_total_carbohydrate']
-            }
-
-            return jsonify(food_info), 200
-        else:
-            return jsonify({'error':'Alimento nao encontrado.'}), 404
-    else:
-        return jsonify({'error':'Erro ao buscar informacoes nutricionais.'}), 500
-
+    return response
 
 app.static_folder = 'static'
 

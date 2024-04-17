@@ -21,55 +21,110 @@
         </div>
     </header>
 
-    <div class="container">
-        <section class="healthy-food-section">
-            <h2>Busca de informacoes nutricionais</h2>
-            </br>
-            <form id="food-search-form">
-                <label for="food-input">Digite o nome de um alimento: </label>
-                <input type="text" id="food-input" name="food" required>
-                <button type="submit">Buscar</button>
-            </form>
-        <div id="food-info"></div>
-        </section>
-    </div>
-
-    <footer class="footer">
+    <div class="body-healthy-food">
         <div class="container">
-            <p>&copy; Saude & Bem-estar. Todos os direitos reservados.</p>
+            <section>
+                <h3>Alimentação saudável</h3>
+                <br>
+                A alimentação saudável é fundamental para o bom funcionamento do organismo e contribui para a qualidade de vida. Ela oferece uma série de benefícios, tais como:
+                <br>
+                <ul class="ul-alimentos-saudaveis-intro">
+                    <ul>
+                        <li>Mais energia: A alimentação saudável fornece os nutrientes necessários para o funcionamento adequado do corpo, garantindo energia e disposição para as atividades diárias e exercícios físicos.</li>
+                        <li>Prevenção de doenças infecciosas: Uma dieta rica em vitaminas e minerais fortalece o sistema imunológico, tornando-o mais eficaz na prevenção de doenças e infecções.</li>
+                        <li>Redução do risco de doenças crônicas: Consumir alimentos ricos em vitaminas, minerais e fibras ajuda a regular os níveis de colesterol e açúcar no sangue, prevenindo doenças cardíacas e diabetes.</li>
+                        <li>Promoção do crescimento e renovação dos tecidos: A alimentação saudável é essencial para o desenvolvimento infantil, ganho de massa muscular e perda de peso, promovendo o crescimento e a renovação dos tecidos, como ossos, pele e músculos.</li>
+                        <li>Melhoria da concentração: Vitaminas e minerais presentes na alimentação saudável contribuem para o bom funcionamento do sistema nervoso, melhorando a concentração, memória e desempenho.</li>
+                        <li>Regulação da produção de hormônios: Nutrientes da alimentação saudável participam da regulação hormonal, prevenindo alterações na tireoide e relacionadas à fertilidade.</li>
+                        <li>Prevenção do envelhecimento precoce: Antioxidantes presentes em uma dieta saudável combatem os radicais livres, melhorando a aparência da pele e retardando os sinais de envelhecimento.</li>
+                        <li>Melhoria da qualidade do sono: Alguns alimentos podem aumentar a produção de melanina, influenciando diretamente na qualidade do sono.</li>
+                    </ul>
+                <br>
+            </ul>
+            <p class="end-intro-healthy-food">Quanto à quantidade mínima recomendada de proteína por dia, existem parâmetros estabelecidos por instituições reconhecidas mundialmente. Por exemplo, a The National Academy of Medicine sugere que adultos consumam no mínimo 0,8 gramas de proteína para cada quilo de peso corporal por dia. Essa recomendação pode variar de acordo com o estilo de vida, idade e necessidades individuais. Consultar um médico ou nutricionista é sempre a melhor abordagem para determinar a quantidade exata de proteína necessária para cada pessoa. Lembre-se de que a qualidade da proteína também é importante, e diversificar as fontes alimentares é essencial para obter todos os aminoácidos essenciais.</p>
+            </section>
+            <br>
+            <section class="healthy-food-calc-protein">
+                <h3 id="h3-calcular-proteina">Calculo de Proteína Diária</h3>
+                <input type="number" id="pesoInput" placeholder="Informe seu peso em kg">
+                <button onclick="calcularProteina()">Calcular</button>
+                <p id="resultado"></p>
+            </section>
+            <br>
+            <section class="healthy-food-section">
+                <h3>Exemplos de alimentos saudaveis</h3>
+                </br>
+                <section>
+                    {% for alimento in alimentos %}
+                        <li id="li-alimentos-saudaveis">{{ alimento.alimento }} - Proteína: {{ alimento.quantidade_proteina }}</li>
+                    {% endfor %}
+                </section>
+                </br>
+                <h3 id="h3-busca-informacoes-complementares">Informacoes nutricionais complementares</h3>
+                <br>
+                <form id="food-search-form">
+                    <!-- <label for="food-input">Digite o nome de um alimento: </label> -->
+                    <input type="text" id="food-input" placeholder="Digite o nome do alimento" name="food" required>
+                    <button type="submit" onclick="buscarNoGoogle()">Buscar</button>
+                </form>
+            <div id="food-info">
+            <!-- sem dados ainda -->
+            </div>
+            </section>
         </div>
-    </footer>
 
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; Saude & Bem-estar. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
     <script>
-        document.getElementById('food-search-form').addEventListener('submit', function(event){
-            event.preventDefault();
-            const foodName = document.getElementById('food-input').value;
-            API_ID = '28af4c45232b4f8f84a300e56269bc24'
-            APP_KEY = '93d7a5c1cc46450983bd48df34cb7904'
-            fetch(`https://api.nutritionix.com/v1_1/search/${foodName}?results=0%3A1&fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat%2Cnf_protein%2Cnf_total_carbohydrate&appId=${API_ID}&appKey=${APP_KEY}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao buscar dicas de exercicios - verifique a conexao com a internet.');
-            }
-                return response.json();
-        })
-            .then(data => {
-                const foodInfo = document.getElementById('food-info');
-                if (data.hits.length > 0){
-                    const food = data.hits[0].fields;
-                    foodInfo.innerHTML = `
-                        <h3>Informacoes nutricionais para ${food.item_name}</h3>
-                        <p>Calorias: ${food.nf_calories}</p>
-                        <p>Gordura Total: ${food.nf_total_fat}g</p>
-                        <p>Proteina: ${food.nf_protein}g</p>
-                        <p>Carboidratos Totais: ${food.nf_total_carbohydrate}g</p>
-                    `;
-                } else {
-                    foodInfo.innerHTML = '<p>Nenhum resultado encontrado para o alimento digitado</p>';
+    
+        function calcularProteina() {
+                    const peso = parseFloat(document.getElementById('pesoInput').value);
+                    const proteinaPorQuilo = 0.8; // Recomendação da The National Academy of Medicine
+
+                    const quantidadeProteina = peso * proteinaPorQuilo;
+                    document.getElementById('resultado').textContent = `Você deve ingerir aproximadamente ${quantidadeProteina.toFixed(2)} gramas de proteína por dia.`;
                 }
-            })
-            .catch(error => console.error('Erro ao buscar informacoes nutricionais', error));
-        });
-    </script>
+            function buscarNoGoogle() {
+                const inputAlimento = document.getElementById('food-input').value + " alimento";
+                const urlPesquisa = `https://www.google.com/search?q=${encodeURIComponent(inputAlimento)}`;
+                window.open(urlPesquisa, '_Open');
+                window.location.reload();
+            }
+
+</script>
+    
 </body>
 </html>
+
+<!-- <script>
+    function searchFood() {
+        const foodName = document.getElementById('food-input').value;
+        // Replace with your server URL
+        const serverUrl = 'http://localhost:5000/scrape_wikipedia';
+
+        fetch(serverUrl, {
+            method: 'POST',
+            body: new URLSearchParams({
+                search_term: foodName
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('food-info').innerHTML = data.data;
+            } else {
+                document.getElementById('food-info').textContent = 'Nenhuma tabela infobox-nowrap encontrada.';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar informações na Wikipedia:', error);
+        });
+    }
+</script> -->

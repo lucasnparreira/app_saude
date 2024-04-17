@@ -8,69 +8,127 @@
 /* Estilos gerais */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ed5252;
+    background-color: #fefdfd;
     color: #333;
+    align-items: center;
 }
 
+.index-body-align-center {
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
+.body-exercice-tips {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.body-imc {
+    padding-top: 5%;
+}
+
+.body-healthy-food {
+    padding-top: 5%;
+}
+
+.ul-dicas-exercicios {
+    padding-left: 5%;
+}
+
+.intro-imc {
+    padding-bottom: 5%;
+    text-align: justify;
+}
+
+.end-intro-healthy-food {
+    text-align: justify;
+}
+
+#resultado {
+    padding-top: 10px;
+}
+
+#h3-calcular-proteina {
+    padding-bottom: 10px;
+}
 .container {
     width: 80%;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Estilos para a barra de navegacao */
-.navbar {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
+/* Estilos para a barra de navegacao e cabecalho */
+@media (min-width: 769px){
+    .navbar {
+        background-color: mediumseagreen;
+        color: #fff;
+        padding: 10px 0;
+    }
+    
+    .navbar ul {
+        list-style-type: none;
+    }
+    
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+    
+    .navbar ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .navbar li:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        padding: 10px;
+        font-size: x-large;
+    }
+    #li-alimentos-saudaveis {
+        padding-left: 15px;
+    }
+    .ul-alimentos-saudaveis-intro {
+        padding-left: 15px;
+    }
+    
 }
 
-.navbar ul {
-    list-style-type: none;
-}
-
-.navbar ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-.navbar ul li a {
-    color: #fff;
-    text-decoration: none;
-}
 
 /* Estilo para o cabecalho */
-.header {
+/* .header {
     display: flex;
-    /* align-items: center; */
     justify-content: flex-start;
     gap: 1vw;
     padding-left: 2vw;
     padding-right: 2vw;
     padding-bottom: 0.5vw;
-}
+} */
 
-.header li {
-    /* padding: 8px;  */
+/* .header li {
     font-size: medium; 
+} */
+
+/* .header li:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+} */
+#detalhes-alimento {
+    padding: 10%;
 }
 
-.header li:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
-}
 
 /* Estilo para o rodape */
 .footer {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 20%;
     bottom: 20px;
     /* position: fixed; */
     left: 0;
     right: 0;
     padding: 20px;
     /* padding-bottom: 20%; */
-    padding-top: 50%;
+    /* padding-top: 50%; */
     text-align: center;
 }
 
@@ -83,7 +141,7 @@ body {
 .welcome-section {
     color:#333;
     padding: 20px;
-    padding-top: 50%;
+    padding-top: 10%;
     text-align: center;
 }
 
@@ -100,5 +158,38 @@ body {
 @media only screen and (max-width: 768px){
     .container {
         width: 90%;
+    }
+
+    .navbar {
+        background-color: mediumseagreen;
+        color: #fff;
+        padding: 10px 0;
+    }
+    
+    .navbar ul {
+        list-style-type: none;
+    }
+    
+    .navbar ul li {
+        display: inline;
+        margin-right: 20px;
+    }
+    
+    .navbar ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+    #li-alimentos-saudaveis {
+        padding-left: 5px;
+        font-size: small;
+    }
+    .healthy-food-intro {
+        padding-left: 5px;
+        font-size: small;
+    }
+
+    .ul-alimentos-saudaveis-intro {
+        padding-left: 15px;
+        text-align: justify;
     }
 }
