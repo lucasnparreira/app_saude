@@ -14,8 +14,8 @@ body {
 }
 
 .index-body-align-center {
-    padding-top: 20%;
-    padding-bottom: 20%;
+    padding-top: 20px;
+    /* padding-bottom: 20%; */
 }
 
 .body-exercice-tips {
@@ -91,6 +91,18 @@ body {
     .ul-alimentos-saudaveis-intro {
         padding-left: 15px;
     }
+    .footer-index {
+        text-align: center;
+        margin-top: 5%;
+        bottom: 20px;
+        /* position: fixed; */
+        left: 0;
+        right: 0;
+        padding-top: 20%;
+        /* padding-bottom: 20%; */
+        /* padding-top: 50%; */
+        text-align: center;
+    }
     
 }
 
@@ -121,7 +133,7 @@ body {
 /* Estilo para o rodape */
 .footer {
     text-align: center;
-    margin-top: 20%;
+    margin-top: 5%;
     bottom: 20px;
     /* position: fixed; */
     left: 0;
@@ -191,5 +203,18 @@ body {
     .ul-alimentos-saudaveis-intro {
         padding-left: 15px;
         text-align: justify;
+    }
+    
+    .footer-index {
+        text-align: center;
+        margin-top: 5%;
+        bottom: 20px;
+        /* position: fixed; */
+        left: 0;
+        right: 0;
+        padding-top: 50%;
+        /* padding-bottom: 20%; */
+        /* padding-top: 50%; */
+        text-align: center;
     }
 }
