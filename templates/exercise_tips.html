@@ -8,17 +8,17 @@
 </head>
 <body>
     <header class="navbar">
-        <div class="container">
-            <!-- <h1>Dicas de exercicios</h1> -->
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
-                    <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
-                    <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
-                </ul>
-            </nav>
-        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Menu
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
+                <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
+                <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
+            </div>
+          </div>
     </header>
 
     <div class="body-exercice-tips">

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <title>Acompanhamento de peso</title>
+    
+</head>
+<body>
+    <header class="navbar">
+        <div class="dropdown">
+            <button class="dropbtn">Menu
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
+                <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li>
+                <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
+                <li><a href="{{ url_for('weight_tracker')}}">Acompanhamento Peso</a></li>
+            </div>
+          </div>
+    </header>
+    
+    <div class="container">
+        <div class="acompanhamento-peso">
+            <h3>Acompanhamento de peso</h3>
+
+            <form method="post">
+                <label for="weight">Peso (kg):</label>
+                <input type="text" id="weight" name="weight" required>
+                <br>
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date" required>
+                <br>
+                <input type="submit" value="Registrar">
+            </form>
+            <br>
+        </div>
+        <h3>Histórico de Pesos:</h3>
+        <ul>
+            {% for row in weights %}
+                <li>{{ row['date'] }} - {{ row['weight'] }} kg
+                    <button onclick="excluirPeso('{{ row['id'] }}')" style="background-color: transparent; border: none; color: black; font-size: medium;padding-left: 10px;">Excluir</button>
+                </li>
+            {% endfor %}
+        </ul>
+    
+    </div>
+    
+    <script>
+        function excluirPeso(weightId) {
+            // Faça uma requisição para a rota de exclusão
+            fetch(`/delete_weight/${weightId}`, {
+                method: 'DELETE',
+            })
+            .then((response) => {
+                if (response.status === 204) {
+                    console.log('Peso excluído com sucesso');
+                    window.location.reload();
+                } else {
+                    console.error('Erro ao excluir peso');
+                }
+            })
+            .catch((error) => {
+                console.error('Erro na requisição:', error);
+            });
+        }
+    </script>
+
+</body>
+</html>

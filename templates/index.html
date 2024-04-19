@@ -8,16 +8,29 @@
 </head>
 <body>
     <header class="navbar">
-        <div class="container">
+        <!-- <div class="container">
             <nav>
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
-                    <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
-                    <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
-                </ul>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
+                        <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
+                        <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
+                    </ul>
+                    
             </nav>
-        </div>
+        </div> -->
+        <div class="dropdown">
+            <button class="dropbtn">Menu
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
+                <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li>
+                <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
+                <li><a href="{{ url_for('weight_tracker')}}">Acompanhamento Peso</a></li>
+            </div>
+          </div>
     </header>
 
     <div class="index-body-align-center">
