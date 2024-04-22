@@ -4,8 +4,6 @@ from urllib import response
 from flask import Flask, jsonify, render_template, request, redirect, url_for, g
 from googlesearch import search
 import sqlite3
-import requests
-
 
 app = Flask(__name__)
 app.config['DATABASE'] = 'database.db'
@@ -25,7 +23,15 @@ def exercise_tips():
 
 @app.route('/calculate_imc', methods=['GET','POST'])
 def calculate_imc():
-    return render_template('calculate_imc.html')
+        # Exemplo de dados fictícios (substitua pelos seus dados reais)
+    datas = ['2024-04-01', '2024-04-02', '2024-04-03', '2024-04-04']
+    pesos = [70, 71, 69, 72]
+
+    # Crie um gráfico de linha usando Google Charts
+    chart_data = [['Data', 'Peso']]
+    for i in range(len(datas)):
+        chart_data.append([datas[i], pesos[i]])
+    return render_template('calculate_imc.html',chart_data=chart_data)
 
 
 @app.route('/healthy_food.html')
@@ -33,19 +39,21 @@ def healthy_food():
     # Carregue os dados do arquivo data.json
     with open('templates\data.json', 'r') as arquivo_json:
         dados = json.load(arquivo_json)
+
+        
     return render_template('healthy_food.html', alimentos=dados['proteina_animal'])
 
-@app.route('/api/data', methods=['GET'])
-def get_data():
-    response = jsonify({'data': 'Dados obtidos com sucesso!'})
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Methods', 'GET')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
-    response.headers.add('Access-Control-Allow-Credentials', 'true')
+# @app.route('/api/data', methods=['GET'])
+# def get_data():
+#     response = jsonify({'data': 'Dados obtidos com sucesso!'})
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+#     response.headers.add('Access-Control-Allow-Methods', 'GET')
+#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+#     response.headers.add('Access-Control-Allow-Credentials', 'true')
 
-    return response
+#     return response
 
-app.static_folder = 'static'
+# app.static_folder = 'static'
 
 def get_db():
     """
@@ -79,7 +87,7 @@ def weight_tracker():
         db.commit()
 
     db = get_db()
-    weights = db.execute('SELECT * FROM weights ORDER BY date DESC').fetchall()
+    weights = db.execute('SELECT * FROM weights ORDER BY date asc').fetchall()
 
     return render_template('weight_form.html', weights=weights)
 

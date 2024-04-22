@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcular IMC</title>
+    <title>Calcule seu IMC</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="icon" href="\static\icon.png" type="image/x-icon">
 </head>
 <body>
     <header class="navbar">
@@ -40,8 +41,8 @@
                     <p><label for="height-input">Altura(m):</label>
                     <input type="text" id="height-input" placeholder="Digite sua altura" ></p>
                     </br>
-                    <button id="calculate-imc-btn">Calcular IMC</button>
-                    <button id="clean-imc-btn">Limpar</button>
+                    <button id="calculate-imc-btn" style="background-color: mediumseagreen; border: none; color: white; font-size: small;padding: 5px; border-radius: 10px;">Calcular IMC</button>
+                    <button id="clean-imc-btn" style="background-color: mediumseagreen; border: none; color: white; font-size: small;padding: 5px; border-radius: 10px;">Limpar</button>
                 </form>
                 </br>
                 <p id="imc-result"></p>
@@ -99,6 +100,6 @@
             }
         });
     </script>
-    
+
 </body>
 </html>

@@ -60,7 +60,6 @@ body {
 .acompanhamento-peso {
     padding-top: 5%;
     padding-bottom: 15px;
-    justify-content: space-between;
 
 }
 
@@ -134,6 +133,36 @@ body {
     display: block;
   }
 
+  #fetch-more-tips-btn {
+    background-color: mediumseagreen; 
+    border: none; 
+    color: white; 
+    font-size: small;padding: 5px; 
+    border-radius: 10px;
+  }
+
+  #button-excluir-peso {
+    background-color: transparent; 
+    border: none; 
+    color: black; 
+    font-size: small;
+    padding-left: 5px;
+
+  }
+
+  #button-registrar-peso {
+    background-color: mediumseagreen; 
+    border: none; 
+    color: white; 
+    font-size: small;
+    padding: 5px; 
+    border-radius: 10px;
+  }
+
+  #h3-acompanhamento-peso, #h3-historico-pesos {
+    padding-bottom: 10px;
+  }
+
 /* Estilos para a barra de navegacao e cabecalho */
 @media (min-width: 769px){
     .navbar {
@@ -162,6 +191,7 @@ body {
         padding: 10px;
         font-size: x-large;
     }
+
     #li-alimentos-saudaveis {
         padding-left: 15px;
     }
@@ -180,28 +210,13 @@ body {
         /* padding-top: 50%; */
         text-align: center;
     }
+    #myChart {
+        width: 500px; 
+        height: 300px;
+    }
     
 }
 
-
-/* Estilo para o cabecalho */
-/* .header {
-    display: flex;
-    justify-content: flex-start;
-    gap: 1vw;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-bottom: 0.5vw;
-} */
-
-/* .header li {
-    font-size: medium; 
-} */
-
-/* .header li:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-} */
 #detalhes-alimento {
     padding: 10%;
 }
@@ -221,7 +236,6 @@ body {
     text-align: center;
 }
 
-/* Estilo para as paginas especificas */
 /* Pagina inicial */
 .welcome-page {
     text-align: center;
@@ -234,17 +248,11 @@ body {
     text-align: center;
 }
 
-/* Pagina de dicas de exercicios */
-.exercise-tips-page {
-    
-}
-
-/* Pagina de calculo do IMC */
-.calculate-imc-page {
-    
-} 
-
 @media only screen and (max-width: 768px){
+    body {
+        font-size: small;
+    }
+    
     .container {
         width: 90%;
     }
@@ -293,5 +301,17 @@ body {
         /* padding-bottom: 20%; */
         /* padding-top: 50%; */
         text-align: center;
+    }
+    #myChart {
+        width: 300px; 
+        height: 200px;
+    }
+    
+    .acompanhamento-peso {
+        font-size: small;
+    }
+
+    #button-excluir-peso {
+        font-size: small;
     }
 }

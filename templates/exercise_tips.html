@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dicas de exercicios</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="icon" href="\static\icon.png" type="image/x-icon">
 </head>
 <body>
     <header class="navbar">
@@ -14,9 +15,10 @@
             </button>
             <div class="dropdown-content">
                 <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
-                <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
-                <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
+                <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
+                <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li>
+                <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
+                <li><a href="{{ url_for('weight_tracker')}}">Acompanhamento Peso</a></li>
             </div>
           </div>
     </header>

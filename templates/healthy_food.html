@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alimentacao saudavel</title>
+    <title>Dicas de Alimentacao saudavel</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="icon" href="\static\icon.png" type="image/x-icon">
 </head>
 <body>
     <header class="navbar">
@@ -48,12 +49,12 @@
             <section class="healthy-food-calc-protein">
                 <h3 id="h3-calcular-proteina">Calculo de Proteína Diária</h3>
                 <input type="number" id="pesoInput" placeholder="Informe seu peso em kg">
-                <button onclick="calcularProteina()">Calcular</button>
+                <button onclick="calcularProteina()" style="background-color: mediumseagreen; border: none; color: white; font-size: small;padding: 5px; border-radius: 10px;">Calcular</button>
                 <p id="resultado"></p>
             </section>
             <br>
             <section class="healthy-food-section">
-                <h3>Exemplos de alimentos saudaveis</h3>
+                <h3>Exemplos de alimentos ricos em proteína</h3>
                 </br>
                 <section>
                     {% for alimento in alimentos %}
@@ -64,9 +65,8 @@
                 <h3 id="h3-busca-informacoes-complementares">Informacoes nutricionais complementares</h3>
                 <br>
                 <form id="food-search-form">
-                    <!-- <label for="food-input">Digite o nome de um alimento: </label> -->
                     <input type="text" id="food-input" placeholder="Digite o nome do alimento" name="food" required>
-                    <button type="submit" onclick="buscarNoGoogle()">Buscar</button>
+                    <button type="submit" onclick="buscarNoGoogle()" style="background-color: mediumseagreen; border: none; color: white; font-size: small;padding: 5px; border-radius: 10px;">Buscar</button>
                 </form>
             <div id="food-info">
             <!-- sem dados ainda -->
@@ -83,49 +83,33 @@
     <script>
     
         function calcularProteina() {
-                    const peso = parseFloat(document.getElementById('pesoInput').value);
+            const inputPeso = document.getElementById('pesoInput').value.trim();
+            if (inputPeso) {
+                const peso = parseFloat(document.getElementById('pesoInput').value);
                     const proteinaPorQuilo = 0.8; // Recomendação da The National Academy of Medicine
 
                     const quantidadeProteina = peso * proteinaPorQuilo;
                     document.getElementById('resultado').textContent = `Você deve ingerir aproximadamente ${quantidadeProteina.toFixed(2)} gramas de proteína por dia.`;
+            } else {
+                window.alert("Informe o seu peso")
+            }
+            
                 }
+
             function buscarNoGoogle() {
-                const inputAlimento = document.getElementById('food-input').value + " alimento";
-                const urlPesquisa = `https://www.google.com/search?q=${encodeURIComponent(inputAlimento)}`;
-                window.open(urlPesquisa, '_Open');
-                window.location.reload();
+                const inputAlimento = document.getElementById('food-input').value.trim();
+                if (inputAlimento) {
+                    const inputAlimento = document.getElementById('food-input').value + " alimento";
+                    const urlPesquisa = `https://www.google.com/search?q=${encodeURIComponent(inputAlimento)}`;
+                    window.open(urlPesquisa, '_blank');
+                    window.location.reload();
+                } else {
+                    window.alert("Informe o nome do alimento que deseja pesquisar")
+                }
+            
             }
 
 </script>
-    
+
 </body>
 </html>
-
-<!-- <script>
-    function searchFood() {
-        const foodName = document.getElementById('food-input').value;
-        // Replace with your server URL
-        const serverUrl = 'http://localhost:5000/scrape_wikipedia';
-
-        fetch(serverUrl, {
-            method: 'POST',
-            body: new URLSearchParams({
-                search_term: foodName
-            }),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('food-info').innerHTML = data.data;
-            } else {
-                document.getElementById('food-info').textContent = 'Nenhuma tabela infobox-nowrap encontrada.';
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao buscar informações na Wikipedia:', error);
-        });
-    }
-</script> -->

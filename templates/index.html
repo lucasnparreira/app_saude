@@ -3,22 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem vindo ao seu site de Saude & Bem-estar</title>
+    <title>Saude & Bem-estar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="icon" href="\static\icon.png" type="image/x-icon">
 </head>
 <body>
     <header class="navbar">
-        <!-- <div class="container">
-            <nav>
-                    <ul>
-                        <li><a href="{{ url_for('index') }}">Home</a></li>
-                        <li><a href="{{ url_for('exercise_tips')}}">Dicas</a></li>
-                        <li><a href="{{ url_for('calculate_imc')}}">IMC</a></li>
-                        <li><a href="{{ url_for('healthy_food')}}">Alimentacao</a></li>
-                    </ul>
-                    
-            </nav>
-        </div> -->
         <div class="dropdown">
             <button class="dropbtn">Menu
               <i class="fa fa-caret-down"></i>

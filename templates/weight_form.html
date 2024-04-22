@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="icon" href="\static\icon.png" type="image/x-icon">
     <title>Acompanhamento de peso</title>
-    
 </head>
 <body>
     <header class="navbar">
@@ -25,7 +25,7 @@
     
     <div class="container">
         <div class="acompanhamento-peso">
-            <h3>Acompanhamento de peso</h3>
+            <h3 id="h3-acompanhamento-peso">Acompanhamento de peso</h3>
 
             <form method="post">
                 <label for="weight">Peso (kg):</label>
@@ -34,20 +34,28 @@
                 <label for="date">Data:</label>
                 <input type="date" id="date" name="date" required>
                 <br>
-                <input type="submit" value="Registrar">
+                <input type="submit" value="Registrar" id="button-registrar-peso">
             </form>
             <br>
-        </div>
-        <h3>Histórico de Pesos:</h3>
+            <h3 id="h3-historico-pesos">Histórico de Pesos:</h3>
         <ul>
             {% for row in weights %}
                 <li>{{ row['date'] }} - {{ row['weight'] }} kg
-                    <button onclick="excluirPeso('{{ row['id'] }}')" style="background-color: transparent; border: none; color: black; font-size: medium;padding-left: 10px;">Excluir</button>
+                    <button id="button-excluir-peso" onclick="excluirPeso('{{ row['id'] }}')"><img src="\static\trash.svg">
+                        </button>
                 </li>
             {% endfor %}
         </ul>
-    
+        </div>
+        
+        <div id="myChart"></div>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Saude e Bem-estar. Todos os direitos reservados.</p>
+        </div>
+    </footer>
     
     <script>
         function excluirPeso(weightId) {
@@ -68,6 +76,31 @@
             });
         }
     </script>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+    
+        function drawChart() {
+          // Defina os dados do gráfico.
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Data');
+          data.addColumn('number', 'Peso');
+
+          data.addRows([
+            {% for row in weights %}
+                    ['{{ row['date'] }}', {{ row['weight'] }}],
+                {% endfor %}
+          ]);
+    
+          // Instancie e desenhe o gráfico.
+          var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+          chart.draw(data, null);
+        }
+      </script>
+
 
 </body>
 </html>
