@@ -163,6 +163,10 @@ body {
     padding-bottom: 10px;
   }
 
+  #lista-historico-pesos {
+    padding-left: 15px;
+  }
+
 /* Estilos para a barra de navegacao e cabecalho */
 @media (min-width: 769px){
     .navbar {
