@@ -32,21 +32,30 @@
                 <li><a href="{{ url_for('login')}}">Login</a></li>
                 {% endif %}
     </header>
-    <h3>Cadastro de Usuário</h3>
-    <form action="/register" method="POST">
-        <label for="username">Nome de Usuário:</label>
-        <input type="text" id="username" name="username" required><br>
+    <div id="cadastro-usuario">
+        
+        <form action="/register" method="POST">
+            <h3>Cadastro de Usuário</h3>
+            <label for="username">Nome de Usuário:</label>
+            <input type="text" id="username" name="username" required><br>
 
-        <label for="number_id">Matrícula:</label>
-        <input type="text" id="number_id" name="number_id" required><br>
+            <label for="number_id">Matrícula:</label>
+            <input type="text" id="number_id" name="number_id" required><br>
 
-        <label for="date">Data:</label>
-        <input type="date" id="date" name="date" required><br>
+            <label for="date">Data:</label>
+            <input type="date" id="date" name="date" required><br>
 
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required><br>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required><br>
 
-        <input type="submit" value="Registrar">
-    </form>
+            <input type="submit" value="Registrar" id="button-cadastro-usuario">
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Saude & Bem-estar. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 </body>
 </html>
