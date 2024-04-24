@@ -1,3 +1,5 @@
+#verificar hospedagem de site com HostGator Brasil
+
 import json
 import os
 from urllib import response
