@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saude & Bem-estar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
     <link rel="icon" href="\static\icon.png" type="image/x-icon">
+    <title>Registro de Usuário</title>
 </head>
 <body>
     <header class="navbar">
@@ -32,21 +32,21 @@
                 <li><a href="{{ url_for('login')}}">Login</a></li>
                 {% endif %}
     </header>
+    <h3>Cadastro de Usuário</h3>
+    <form action="/register" method="POST">
+        <label for="username">Nome de Usuário:</label>
+        <input type="text" id="username" name="username" required><br>
 
-    <div class="index-body-align-center">
-        <div class="container">
-            <section class="welcome-section">
-                <h2>Seja bem-vindo ao nosso site!</h2>
-            </br>
-                <p>Aqui voce encontra dicas uteis para melhorar sua saude e bem-estar.</p>
-            </section>
-        </div>
+        <label for="number_id">Matrícula:</label>
+        <input type="text" id="number_id" name="number_id" required><br>
 
-        <footer class="footer-index">
-            <div class="container">
-                <p>&copy; 2024 Saude & Bem-estar. Todos os direitos reservados.</p>
-            </div>
-        </footer>
-    </div>
+        <label for="date">Data:</label>
+        <input type="date" id="date" name="date" required><br>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <input type="submit" value="Registrar">
+    </form>
 </body>
 </html>

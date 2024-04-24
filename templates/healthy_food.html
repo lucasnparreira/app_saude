@@ -15,12 +15,22 @@
             </button>
             <div class="dropdown-content">
                 <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
-                <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li>
-                <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
-                <li><a href="{{ url_for('weight_tracker')}}">Acompanhamento Peso</a></li>
-            </div>
-          </div>
+                {% if session.loggedin %}
+                        <li><a href="{{ url_for('weight_tracker')}}">Acompanhamento Peso</a></li>
+                        <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
+                        <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
+                        <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li>
+                        {% if session.username == 'admin'%}
+                        <li><a href="{{ url_for('register')}}">Cadastrar Usuario</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('logout')}}">Sair</a></li>
+                    </div>
+                </div>
+          
+                <p class="user-info">Ola, {{ session.username }}</p>
+                {% else %}
+                <li><a href="{{ url_for('login')}}">Login</a></li>
+                {% endif %}
     </header>
 
     <div class="body-healthy-food">

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saude & Bem-estar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
     <link rel="icon" href="\static\icon.png" type="image/x-icon">
+    <title>Página de Login</title>
 </head>
 <body>
     <header class="navbar">
@@ -32,21 +32,14 @@
                 <li><a href="{{ url_for('login')}}">Login</a></li>
                 {% endif %}
     </header>
-
-    <div class="index-body-align-center">
-        <div class="container">
-            <section class="welcome-section">
-                <h2>Seja bem-vindo ao nosso site!</h2>
-            </br>
-                <p>Aqui voce encontra dicas uteis para melhorar sua saude e bem-estar.</p>
-            </section>
-        </div>
-
-        <footer class="footer-index">
-            <div class="container">
-                <p>&copy; 2024 Saude & Bem-estar. Todos os direitos reservados.</p>
-            </div>
-        </footer>
+  
+    <div class="login-container">
+        <form action="/login" method="POST">
+            <h3 id="h3-login">Login</h3>
+            <input type="text" name="username" placeholder="Nome de Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit" id="button-login">Entrar</button>
+        </form>
     </div>
 </body>
 </html>

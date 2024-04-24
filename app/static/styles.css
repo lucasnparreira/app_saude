@@ -159,6 +159,15 @@ body {
     border-radius: 10px;
   }
 
+  #button-login {
+    background-color: mediumseagreen; 
+    border: none; 
+    color: white; 
+    font-size: small;
+    padding: 5px; 
+    border-radius: 10px;
+  }
+
   #h3-acompanhamento-peso, #h3-historico-pesos {
     padding-bottom: 10px;
   }
@@ -166,6 +175,20 @@ body {
   #lista-historico-pesos {
     padding-left: 15px;
   }
+
+  .login-container{
+    padding-left: 40%;
+    padding-right: 40%;
+    padding-top: 40%;
+    padding-bottom: 40%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* #h3-login {
+    display: flex;
+    justify-content: center;
+  } */
 
 /* Estilos para a barra de navegacao e cabecalho */
 @media (min-width: 769px){
@@ -219,6 +242,10 @@ body {
         height: 300px;
     }
     
+    .user-info {
+        padding-left: 85%;
+        padding-top: 15px;
+      }
 }
 
 #detalhes-alimento {
@@ -318,4 +345,9 @@ body {
     #button-excluir-peso {
         font-size: small;
     }
+
+    .user-info {
+        padding-left: 65%;
+        padding-top: 15px;
+      }
 }
