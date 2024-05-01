@@ -1,4 +1,5 @@
 #verificar hospedagem de site com HostGator Brasil
+# verificar PythonAnywhere https://help.pythonanywhere.com/pages/Flask/ 
 
 import json
 import os
@@ -13,9 +14,6 @@ app = Flask(__name__)
 app.config['DATABASE'] = 'database.db'
 DATABASE = 'database.db'
 
-
-
-app = Flask(__name__)
 template_dir = os.path.abspath('templates')
 app.template_folder = template_dir
 
@@ -77,21 +75,27 @@ def close_db(error):
     if db is not None:
         db.close()
 
+def get_user_id():
+    return session.get('user_id')
+
 @app.route('/weight_form', methods=['GET', 'POST'])
 #@login_required
 def weight_tracker():
+    user_id = get_user_id()  # Obtém o ID do usuário logado
+
     if request.method == 'POST':
         weight = request.form['weight']
         date = request.form['date']
 
         db = get_db()
-        db.execute('INSERT INTO weights (weight, date) VALUES (?, ?)', (weight, date))
+        db.execute('INSERT INTO weights (user_id, weight, date) VALUES (?, ?, ?)', (user_id, weight, date))
         db.commit()
 
     db = get_db()
-    weights = db.execute('SELECT * FROM weights ORDER BY date asc').fetchall()
+    weights = db.execute('SELECT * FROM weights WHERE user_id = ? ORDER BY date ASC', (user_id,)).fetchall()
 
     return render_template('weight_form.html', weights=weights)
+
 
 @app.route('/delete_weight/<int:weight_id>', methods=['DELETE'])
 #@login_required
@@ -136,6 +140,8 @@ def login():
             session['loggedin'] = True
             session['id'] = account['id']
             session['username'] = account['username']
+            user_id = get_user_id_from_database(username, password)
+            session['user_id'] = user_id
             msg = 'Logged in successfully!'
             return render_template('index.html', msg=msg)
         else:
@@ -143,6 +149,17 @@ def login():
             return render_template('login.html', msg=msg)
 
     return render_template('login.html', msg=msg)
+
+def get_user_id_from_database(username, password):
+    """
+    Retorna o ID do usuário com base no nome de usuário e senha fornecidos.
+    """
+    db = get_db()  # Suponha que você já tenha uma função get_db() para obter a conexão com o banco de dados
+    user_data = db.execute('SELECT id FROM users WHERE username = ? AND password = ?', (username, password)).fetchone()
+    if user_data:
+        return user_data['id']
+    else:
+        return None  # Retorna None se as credenciais não forem válidas
 
 @app.route('/logout')
 def logout():
