@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="icon" href="\static\icon.png" type="image/x-icon">
+    <title>Cadastro de medidas corporais</title>
+</head>
+<body>
+    <header class="navbar">
+        <div class="dropdown">
+            <button class="dropbtn">Menu
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                {% if session.loggedin %}
+                        <li><a href="{{ url_for('weight_tracker')}}">Historico Peso</a></li>
+                        <li><a href="{{ url_for('weight_form')}}">Cadastro Peso</a></li>
+                        <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
+                        <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
+                        <!-- <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li> -->
+                        {% if session.username == 'admin'%}
+                        <li><a href="{{ url_for('register')}}">Cadastrar Usuario</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('logout')}}">Sair</a></li>
+                    </div>
+                </div>
+          
+                <p class="user-info">Ola, {{ session.username }}</p>
+                {% else %}
+                <li><a href="{{ url_for('login')}}">Login</a></li>
+                {% endif %}
+    </header>
+    
+    <div class="container">
+        <div class="acompanhamento-medidas">
+            <h3 id="h3-acompanhamento-medidas">Cadastro de medidas corporais</h3>
+
+            <form method="post" action="{{ url_for('cadastrar_medidas') }}">
+                <label for="user_id">ID do usuário a ser cadastrado:</label>
+                <select id="user_id" name="user_id">
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.id }} - {{ user.username }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date" required>
+                <br>
+                
+                <label for="altura">Altura (cm):</label>
+                <input type="text" id="altura" name="altura" required>
+                <br>
+        
+                <label for="peso">Peso (kg):</label>
+                <input type="text" id="peso" name="peso" required>
+                <br>
+        
+                <label for="circunferencia_cintura">Circunferência da Cintura (cm):</label>
+                <input type="text" id="circunferencia_cintura" name="circunferencia_cintura" required>
+                <br>
+        
+                <label for="circunferencia_quadril">Circunferência do Quadril (cm):</label>
+                <input type="text" id="circunferencia_quadril" name="circunferencia_quadril" required>
+                <br>
+        
+                <label for="circunferencia_braco">Circunferência do Braço (cm):</label>
+                <input type="text" id="circunferencia_braco" name="circunferencia_braco" required>
+                <br>
+        
+                <input type="submit" value="Cadastrar">
+            </form>
+
+            <br>
+
+           
+        </div>
+        
+        
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Saude e Bem-estar. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+
+</body>
+</html>

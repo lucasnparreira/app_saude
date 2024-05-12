@@ -36,9 +36,9 @@
     
     <div class="container">
         <div class="acompanhamento-peso">
-            <h3 id="h3-acompanhamento-peso">Cadastro de peso</h3>
+            <h3 id="h3-acompanhamento-peso">Historico de peso</h3>
 
-            <form method="post">
+            <!-- <form method="post">
                 <label for="user_id">ID do usuário a ser cadastrado:</label>
                 <select id="user_id" name="user_id">
                     {% for user in users %}
@@ -53,10 +53,10 @@
                 <input type="date" id="date" name="date" required>
                 <br>
                 <input type="submit" value="Registrar" id="button-registrar-peso">
-            </form>
+            </form> -->
             <br>
 
-            <!-- <div id="myChart"></div>
+            <div id="myChart"></div>
 
             <br>
             <h3 id="h3-historico-pesos">Histórico de Pesos:</h3>
@@ -67,7 +67,7 @@
                         </button>
                 </li>
             {% endfor %}
-        </ul> -->
+        </ul>
         </div>
         
         
@@ -79,7 +79,7 @@
         </div>
     </footer>
     
-    <!-- <script>
+    <script>
         function excluirPeso(weightId) {
             // Faça uma requisição para a rota de exclusão
             fetch(`/delete_weight/${weightId}`, {
@@ -130,7 +130,7 @@
           var chart = new google.visualization.LineChart(document.getElementById('myChart'));
           chart.draw(data, options);
         }
-      </script> -->
+      </script>
 
 
 </body>

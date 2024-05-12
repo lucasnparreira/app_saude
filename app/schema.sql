@@ -13,3 +13,15 @@ CREATE TABLE IF NOT EXISTS weights (
     date DATE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)  -- Chave estrangeira para associar com a tabela users
 );
+
+CREATE TABLE IF NOT EXISTS medidas_corporais (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    date DATE NOT NULL,
+    altura REAL NOT NULL,
+    peso REAL NOT NULL,
+    circunferencia_cintura REAL NOT NULL,
+    circunferencia_quadril REAL NOT NULL,
+    circunferencia_braco REAL NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);

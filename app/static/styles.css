@@ -208,12 +208,11 @@ body {
         text-decoration: none;
     }
     
-    .navbar li:hover {
-        /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); */
+    /* .navbar li:hover {
         border-radius: 8px;
         padding: 10px;
         font-size: x-large;
-    }
+    } */
 
     #li-alimentos-saudaveis {
         padding-left: 15px;

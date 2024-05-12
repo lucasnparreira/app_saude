@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
     <link rel="icon" href="\static\icon.png" type="image/x-icon">
-    <title>Acompanhamento de peso</title>
+    <title>Acompanhamento de medidas</title>
 </head>
 <body>
     <header class="navbar">
@@ -36,9 +36,9 @@
     
     <div class="container">
         <div class="acompanhamento-peso">
-            <h3 id="h3-acompanhamento-peso">Cadastro de peso</h3>
+            <h3 id="h3-acompanhamento-peso">Historico de medidas</h3>
 
-            <form method="post">
+            <!-- <form method="post">
                 <label for="user_id">ID do usuário a ser cadastrado:</label>
                 <select id="user_id" name="user_id">
                     {% for user in users %}
@@ -53,21 +53,21 @@
                 <input type="date" id="date" name="date" required>
                 <br>
                 <input type="submit" value="Registrar" id="button-registrar-peso">
-            </form>
+            </form> -->
             <br>
 
-            <!-- <div id="myChart"></div>
+            <div id="myChart"></div>
 
             <br>
-            <h3 id="h3-historico-pesos">Histórico de Pesos:</h3>
+            <h3 id="h3-historico-pesos">Histórico de Medidas Corporais:</h3>
         <ul id="lista-historico-pesos">
-            {% for row in weights %}
-                <li>{{ row['date'] }} - {{ row['weight'] }} kg
+            {% for row in medidas_corporais %}
+                <li>{{ row['date'] }} - {{ row['altura'] }} cm - {{ row['peso'] }} - {{ row['circunferencia_cintura'] }} - {{ row['circunferencia_quadril'] }} - {{ row['circunferencia_braco'] }}
                     <button id="button-excluir-peso" onclick="excluirPeso('{{ row['id'] }}')"><img src="\static\trash.svg">
                         </button>
                 </li>
             {% endfor %}
-        </ul> -->
+        </ul>
         </div>
         
         
@@ -79,7 +79,7 @@
         </div>
     </footer>
     
-    <!-- <script>
+    <script>
         function excluirPeso(weightId) {
             // Faça uma requisição para a rota de exclusão
             fetch(`/delete_weight/${weightId}`, {
@@ -130,7 +130,7 @@
           var chart = new google.visualization.LineChart(document.getElementById('myChart'));
           chart.draw(data, options);
         }
-      </script> -->
+      </script>
 
 
 </body>

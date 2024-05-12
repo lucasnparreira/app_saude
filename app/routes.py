@@ -3,14 +3,34 @@
 
 import json
 import os
-from urllib import response
-from flask import Flask, jsonify, render_template, request, redirect, session, url_for, g
-from googlesearch import search
 import sqlite3
-# from flask_login import login_required
-#from flask_login import LoginManager
+from flask import Flask, render_template, request, redirect, session, url_for, g
+from flask_login import LoginManager, UserMixin, current_user, login_required
 
 app = Flask(__name__)
+app.config['DATABASE'] = 'database.db'
+DATABASE = 'database.db'
+
+template_dir = os.path.abspath('templates')
+app.template_folder = template_dir
+
+app.secret_key = 'your_secret_key_here'
+
+login_manager = LoginManager(app)
+# login_manager.login_view = 'login'
+login_manager.login_view = 'weight_tracker'
+
+# Definição da classe User
+class User(UserMixin):
+    def __init__(self, user_id):
+        self.user_id = user_id
+
+# Função load_user para carregar um usuário com base no ID
+@login_manager.user_loader
+def load_user(user_id):
+    # Substitua esta linha pela lógica real para carregar um usuário do seu banco de dados
+    return User(user_id)
+
 app.config['DATABASE'] = 'database.db'
 DATABASE = 'database.db'
 
@@ -47,7 +67,7 @@ def calculate_imc():
 #@login_required
 def healthy_food():
     # Carregue os dados do arquivo data.json
-    with open('templates\data.json', 'r') as arquivo_json:
+    with open('templates/data.json', 'r') as arquivo_json:
         dados = json.load(arquivo_json)
 
         
@@ -79,22 +99,42 @@ def get_user_id():
     return session.get('user_id')
 
 @app.route('/weight_form', methods=['GET', 'POST'])
+# @login_required
+def weight_form():
+    db = get_db()
+    users = db.execute('SELECT * FROM users').fetchall()
+    return render_template('weight_form.html', users=users)
+
+@app.route('/weight_tracker', methods=['GET'])
 #@login_required
 def weight_tracker():
-    user_id = get_user_id()  # Obtém o ID do usuário logado
-
-    if request.method == 'POST':
-        weight = request.form['weight']
-        date = request.form['date']
-
+        user_id = None
         db = get_db()
-        db.execute('INSERT INTO weights (user_id, weight, date) VALUES (?, ?, ?)', (user_id, weight, date))
-        db.commit()
+        user_id = session.get('user_id')
+        # date = request.form['date']
+        weights = db.execute('SELECT * FROM weights WHERE user_id = ? ORDER BY date asc', (user_id,)).fetchall()
+        return render_template('weight_tracker.html', weights=weights, user_id = user_id)
+    # else:
+    #     return redirect(url_for('login'))
 
-    db = get_db()
-    weights = db.execute('SELECT * FROM weights WHERE user_id = ? ORDER BY date ASC', (user_id,)).fetchall()
+# @app.route('/weight_form', methods=['GET', 'POST'])
+# #@login_required
+# def weight_tracker():
+#     user_id = None
+#     if request.method == 'POST':
+#         user_id = request.form['user_id']
+#         weight = request.form['weight']
+#         date = request.form['date']
 
-    return render_template('weight_form.html', weights=weights)
+#         db = get_db()
+#         db.execute('INSERT INTO weights (user_id, weight, date) VALUES (?, ?, ?)', (user_id, weight, date))
+#         db.commit()
+
+#     db = get_db()
+#     weights = db.execute('SELECT * FROM weights WHERE user_id = ? ORDER BY date asc', (user_id,)).fetchall()
+#     users = db.execute('SELECT * FROM users').fetchall()
+
+#     return render_template('weight_form.html', weights=weights, users=users)
 
 
 @app.route('/delete_weight/<int:weight_id>', methods=['DELETE'])
@@ -165,6 +205,35 @@ def get_user_id_from_database(username, password):
 def logout():
     session.clear()  # Limpa a sessão do usuário
     return redirect('/')  # Redireciona para a página inicial ou outra página de sua escolha
+
+@app.route('/cadastrar_medidas', methods=['GET', 'POST'])
+def cadastrar_medidas():
+    if request.method == 'POST':
+        id = request.form['id']
+        altura = request.form['altura']
+        peso = request.form['peso']
+        circunferencia_cintura = request.form['circunferencia_cintura']
+        circunferencia_quadril = request.form['circunferencia_quadril']
+        circunferencia_braco = request.form['circunferencia_braco']
+        
+        # Aqui você pode salvar os dados no banco de dados ou fazer qualquer outra operação necessária
+
+        # Redirecionar para a página de sucesso após o cadastro
+        return redirect(url_for('cadastro_sucesso'))
+
+    # Se for uma requisição GET, simplesmente renderize a página HTML
+    return render_template('body_check.html')
+
+@app.route('/cadastro_sucesso')
+def cadastro_sucesso():
+    return "Medidas corporais cadastradas com sucesso!"
+
+@app.route('/exibir_medidas', methods=['GET'])
+# @login_required
+def exibir_medidas():
+    db = get_db()
+    users = db.execute('SELECT * FROM users').fetchall()
+    return render_template('exibir_medidas.html', users=users)
 
 if __name__ == '__main__':
     app.run(debug = True)
