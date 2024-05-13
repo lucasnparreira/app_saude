@@ -18,11 +18,15 @@
                 {% if session.loggedin %}
                         <li><a href="{{ url_for('weight_tracker')}}">Historico Peso</a></li>
                         <li><a href="{{ url_for('weight_form')}}">Cadastro Peso</a></li>
+                        <li><a href="{{ url_for('exibir_medidas')}}">Exibir Medidas Corporais</a></li>
                         <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
                         <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
-                        <!-- <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li> -->
+                        
                         {% if session.username == 'admin'%}
+                        <hr>
                         <li><a href="{{ url_for('register')}}">Cadastrar Usuario</a></li>
+                        <li><a href="{{ url_for('cadastrar_medidas')}}">Cadastrar Medidas Corporais</a></li>
+                        
                         {% endif %}
                         <li><a href="{{ url_for('logout')}}">Sair</a></li>
                     </div>
@@ -46,9 +50,12 @@
                 <option value="peso">Peso</option>
                 <option value="altura">Altura</option>
                 <option value="date">Data</option>
-                <option value="circunferencia_braco">Circunferencia Biceps</option>
+                <option value="circunferencia_braco">Circunferencia Braco</option>
+                <option value="circunferencia_quadril">Circunferencia Quadril</option>
+                <option value="circunferencia_cintura">Circunferencia Cintura</option>
                 
             </select>
+
             <h3 id="h3-historico-medidas">Histórico de Medidas Corporais:</h3>
             <ul id="lista-historico-medidas">
                 {% for medida in medidas %}
@@ -60,7 +67,11 @@
                         Data: {{ medida['date'] }} <br>
                         Altura: {{ medida['altura'] }} <br>
                         Peso: {{ medida['peso'] }} <br>
-                        <!-- Adicione outros campos de medida conforme necessário -->
+                        Circunferencia Braco: {{ medida['circunferencia_braco'] }} <br>
+                        Circunferencia Quadril: {{ medida['circunferencia_quadril'] }} <br>
+                        Circunferencia Cintura: {{ medida['circunferencia_cintura'] }} <br>
+                        
+                        <br>
                        
                     </li>
                 {% endfor %}

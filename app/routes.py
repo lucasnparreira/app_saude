@@ -111,6 +111,7 @@ def weight_form():
         db.execute('INSERT INTO weights (user_id, weight, date) VALUES (?, ?, ?)', (user_id, weight, date))
         db.commit()
     
+    db = get_db()
     users = db.execute('SELECT * FROM users').fetchall()
     return render_template('weight_form.html', users=users)
 
@@ -121,7 +122,8 @@ def weight_tracker():
         db = get_db()
         user_id = session.get('user_id')
         # date = request.form['date']
-        weights = db.execute('SELECT * FROM weights WHERE user_id = ? ORDER BY date asc', (user_id,)).fetchall()
+        weights = db.execute('SELECT user_id, date, weight FROM weights WHERE user_id = ? UNION ALL SELECT user_id, date, peso AS weight FROM medidas_corporais WHERE user_id = ? ORDER BY weight ASC, date ASC', (user_id, user_id)).fetchall()
+        # weights = db.execute('SELECT * FROM weights WHERE user_id = ? ORDER BY date asc', (user_id,)).fetchall()
         return render_template('weight_tracker.html', weights=weights, user_id = user_id)
     # else:
     #     return redirect(url_for('login'))
@@ -248,6 +250,7 @@ def exibir_medidas():
     user_id = None
     db = get_db()
     user_id = session.get('user_id')
+    # pesos = db.execute('SELECT user_id, date, weight as peso FROM weights WHERE user_id = ? UNION ALL SELECT user_id, date, peso AS mc FROM medidas_corporais WHERE user_id = ? ORDER BY peso ASC, date ASC', (user_id,user_id)).fetchall()
     medidas = db.execute('SELECT * FROM medidas_corporais where user_id = ? ORDER BY date ASC', (user_id,)).fetchall()
     return render_template('exibir_medidas.html', medidas=medidas, user_id = user_id)
 
@@ -264,7 +267,7 @@ from flask import jsonify
 @app.route('/get_medidas_data/<item>', methods=['GET'])
 def get_medidas_data(item):
     # Verifique se o item é válido para evitar injeção de SQL
-    valid_items = ['peso', 'altura', 'date', 'circunferencia_braco']  # Adicione outros itens conforme necessário
+    valid_items = ['peso', 'altura', 'date', 'circunferencia_braco','circunferencia_quadril','circunferencia_cintura']  # Adicione outros itens conforme necessário
     if item not in valid_items:
         return jsonify({'error': 'Item inválido'}), 400
 
