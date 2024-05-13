@@ -39,8 +39,8 @@
             <h3 id="h3-acompanhamento-medidas">Cadastro de medidas corporais</h3>
 
             <form method="post" action="{{ url_for('cadastrar_medidas') }}">
-                <label for="user_id">ID do usuário a ser cadastrado:</label>
-                <select id="user_id" name="user_id">
+                <label for="user_id_medidas">ID do usuário a ser cadastrado:</label>
+                <select id="user_id_medidas" name="user_id_medidas">
                     {% for user in users %}
                         <option value="{{ user.id }}">{{ user.id }} - {{ user.username }}</option>
                     {% endfor %}

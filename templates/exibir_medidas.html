@@ -35,35 +35,18 @@
     </header>
     
     <div class="container">
-        <div class="acompanhamento-peso">
-            <h3 id="h3-acompanhamento-peso">Historico de medidas</h3>
-
-            <!-- <form method="post">
-                <label for="user_id">ID do usuário a ser cadastrado:</label>
-                <select id="user_id" name="user_id">
-                    {% for user in users %}
-                        <option value="{{ user.id }}">{{ user.id }} - {{ user.username }}</option>
-                    {% endfor %}
-                </select>
-                <br>
-                <label for="weight">Peso (kg):</label>
-                <input type="text" id="weight" name="weight" required>
-                <br>
-                <label for="date">Data:</label>
-                <input type="date" id="date" name="date" required>
-                <br>
-                <input type="submit" value="Registrar" id="button-registrar-peso">
-            </form> -->
+        <div class="acompanhamento-medidas">
+            <h3 id="h3-acompanhamento-medidas">Historico de medidas</h3>
             <br>
 
-            <div id="myChart"></div>
+            <div id="myChartMedidas"></div>
 
             <br>
-            <h3 id="h3-historico-pesos">Histórico de Medidas Corporais:</h3>
-        <ul id="lista-historico-pesos">
+            <h3 id="h3-historico-medidas">Histórico de Medidas Corporais:</h3>
+        <ul id="lista-historico-medidas">
             {% for row in medidas_corporais %}
-                <li>{{ row['date'] }} - {{ row['altura'] }} cm - {{ row['peso'] }} - {{ row['circunferencia_cintura'] }} - {{ row['circunferencia_quadril'] }} - {{ row['circunferencia_braco'] }}
-                    <button id="button-excluir-peso" onclick="excluirPeso('{{ row['id'] }}')"><img src="\static\trash.svg">
+                <li>{{ row['user_id'] }} 
+                    <button id="button-excluir-medidas" onclick="excluirMedidas('{{ row['user_id'] }}')"><img src="\static\trash.svg">
                         </button>
                 </li>
             {% endfor %}
@@ -80,17 +63,17 @@
     </footer>
     
     <script>
-        function excluirPeso(weightId) {
+        function excluirMedidas(medidasId) {
             // Faça uma requisição para a rota de exclusão
-            fetch(`/delete_weight/${weightId}`, {
+            fetch(`/excluir_medidas/${medidasId}`, {
                 method: 'DELETE',
             })
             .then((response) => {
                 if (response.status === 204) {
-                    console.log('Peso excluído com sucesso');
+                    console.log('Medidas excluídas com sucesso');
                     window.location.reload();
                 } else {
-                    console.error('Erro ao excluir peso');
+                    console.error('Erro ao excluir medidas');
                 }
             })
             .catch((error) => {
@@ -112,7 +95,7 @@
           data.addColumn('number', 'Peso');
 
           data.addRows([
-            {% for row in weights %}
+            {% for row in medidas_corporais %}
                     ['{{ row['date'] }}', {{ row['weight'] }}],
                 {% endfor %}
           ]);
@@ -127,7 +110,7 @@
             };
 
           // Instancie e desenhe o gráfico.
-          var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+          var chart = new google.visualization.LineChart(document.getElementById('myChartMedidas'));
           chart.draw(data, options);
         }
       </script>

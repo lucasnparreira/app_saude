@@ -176,6 +176,10 @@ body {
     padding-left: 15px;
   }
 
+  #lista-historico-medidas {
+    background-color: red;
+    padding-left: 15px;
+  }
 
   #button-cadastro-usuario {
     background-color: mediumseagreen; 

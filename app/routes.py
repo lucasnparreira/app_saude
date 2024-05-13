@@ -5,7 +5,7 @@ import json
 import os
 import sqlite3
 from flask import Flask, render_template, request, redirect, session, url_for, g
-from flask_login import LoginManager, UserMixin, current_user, login_required
+#from flask_login import LoginManager, UserMixin, current_user, login_required
 
 app = Flask(__name__)
 app.config['DATABASE'] = 'database.db'
@@ -16,20 +16,20 @@ app.template_folder = template_dir
 
 app.secret_key = 'your_secret_key_here'
 
-login_manager = LoginManager(app)
+#login_manager = LoginManager(app)
 # login_manager.login_view = 'login'
-login_manager.login_view = 'weight_tracker'
+#login_manager.login_view = 'weight_tracker'
 
 # Definição da classe User
-class User(UserMixin):
-    def __init__(self, user_id):
-        self.user_id = user_id
+# class User(UserMixin):
+#     def __init__(self, user_id):
+#         self.user_id = user_id
 
-# Função load_user para carregar um usuário com base no ID
-@login_manager.user_loader
-def load_user(user_id):
-    # Substitua esta linha pela lógica real para carregar um usuário do seu banco de dados
-    return User(user_id)
+# # Função load_user para carregar um usuário com base no ID
+# @login_manager.user_loader
+# def load_user(user_id):
+#     # Substitua esta linha pela lógica real para carregar um usuário do seu banco de dados
+#     return User(user_id)
 
 app.config['DATABASE'] = 'database.db'
 DATABASE = 'database.db'
@@ -67,7 +67,7 @@ def calculate_imc():
 #@login_required
 def healthy_food():
     # Carregue os dados do arquivo data.json
-    with open('templates/data.json', 'r') as arquivo_json:
+    with open('templates\data.json', 'r') as arquivo_json:
         dados = json.load(arquivo_json)
 
         
@@ -101,7 +101,16 @@ def get_user_id():
 @app.route('/weight_form', methods=['GET', 'POST'])
 # @login_required
 def weight_form():
-    db = get_db()
+    user_id = None
+    if request.method == 'POST':
+        user_id = request.form['user_id']
+        weight = request.form['weight']
+        date = request.form['date']
+
+        db = get_db()
+        db.execute('INSERT INTO weights (user_id, weight, date) VALUES (?, ?, ?)', (user_id, weight, date))
+        db.commit()
+    
     users = db.execute('SELECT * FROM users').fetchall()
     return render_template('weight_form.html', users=users)
 
@@ -208,21 +217,26 @@ def logout():
 
 @app.route('/cadastrar_medidas', methods=['GET', 'POST'])
 def cadastrar_medidas():
+    db = get_db()
+    users = db.execute('SELECT * FROM users').fetchall()
+
     if request.method == 'POST':
-        id = request.form['id']
+        user_id = request.form['user_id_medidas']
+        date = request.form['date']
         altura = request.form['altura']
         peso = request.form['peso']
         circunferencia_cintura = request.form['circunferencia_cintura']
         circunferencia_quadril = request.form['circunferencia_quadril']
         circunferencia_braco = request.form['circunferencia_braco']
         
-        # Aqui você pode salvar os dados no banco de dados ou fazer qualquer outra operação necessária
-
-        # Redirecionar para a página de sucesso após o cadastro
-        return redirect(url_for('cadastro_sucesso'))
+  
+        db = get_db()
+        db.execute('INSERT INTO medidas_corporais (user_id, date, altura, peso, circunferencia_cintura, circunferencia_quadril, circunferencia_braco) VALUES (?, ?, ?, ?, ?, ?, ?)', (user_id, date, altura, peso, circunferencia_cintura, circunferencia_quadril, circunferencia_braco))
+        db.commit()
+        return redirect(url_for('cadastrar_medidas'))
 
     # Se for uma requisição GET, simplesmente renderize a página HTML
-    return render_template('body_check.html')
+    return render_template('body_check.html', users=users)
 
 @app.route('/cadastro_sucesso')
 def cadastro_sucesso():
@@ -231,9 +245,19 @@ def cadastro_sucesso():
 @app.route('/exibir_medidas', methods=['GET'])
 # @login_required
 def exibir_medidas():
+    user_id = None
     db = get_db()
-    users = db.execute('SELECT * FROM users').fetchall()
-    return render_template('exibir_medidas.html', users=users)
+    user_id = session.get('user_id')
+    medidas = db.execute('SELECT * FROM medidas_corporais where user_id = ? ORDER BY date asc', (user_id,)).fetchall()
+    return render_template('exibir_medidas.html', medidas=medidas, user_id = user_id)
+
+@app.route('/excluir_medidas/<int:medidas_id>', methods=['DELETE'])
+#@login_required
+def excluir_medidas(medidas_id):
+    db = get_db()
+    db.execute('DELETE FROM medidas_corporais WHERE id = ?', (medidas_id,))
+    db.commit()
+    return 'Medidas excluídas com sucesso', 204
 
 if __name__ == '__main__':
     app.run(debug = True)

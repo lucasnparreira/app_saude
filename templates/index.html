@@ -18,13 +18,14 @@
                 {% if session.loggedin %}
                         <li><a href="{{ url_for('weight_tracker')}}">Historico Peso</a></li>
                         <li><a href="{{ url_for('weight_form')}}">Cadastro Peso</a></li>
+                        <li><a href="{{ url_for('exibir_medidas')}}">Exibir Medidas Corporais</a></li>
                         <li><a href="{{ url_for('calculate_imc')}}">Calculo IMC</a></li>
                         <li><a href="{{ url_for('healthy_food')}}">Dicas Alimentacao</a></li>
                         <!-- <li><a href="{{ url_for('exercise_tips')}}">Dicas Exercicios</a></li> -->
                         {% if session.username == 'admin'%}
                         <li><a href="{{ url_for('register')}}">Cadastrar Usuario</a></li>
                         <li><a href="{{ url_for('cadastrar_medidas')}}">Cadastro Medidas Corporais</a></li>
-                        <li><a href="{{ url_for('exibir_medidas')}}">Exibir Medidas Corporais</a></li>
+                        
                         {% endif %}
                         <li><a href="{{ url_for('logout')}}">Sair</a></li>
                     </div>
