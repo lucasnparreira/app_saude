@@ -42,15 +42,30 @@
             <div id="myChartMedidas"></div>
 
             <br>
+            <select id="select-item" onchange="updateChart()">
+                <option value="peso">Peso</option>
+                <option value="altura">Altura</option>
+                <option value="date">Data</option>
+                <option value="circunferencia_braco">Circunferencia Biceps</option>
+                
+            </select>
             <h3 id="h3-historico-medidas">Histórico de Medidas Corporais:</h3>
-        <ul id="lista-historico-medidas">
-            {% for row in medidas_corporais %}
-                <li>{{ row['user_id'] }} 
-                    <button id="button-excluir-medidas" onclick="excluirMedidas('{{ row['user_id'] }}')"><img src="\static\trash.svg">
+            <ul id="lista-historico-medidas">
+                {% for medida in medidas %}
+                    <li>
+                        User ID: {{ medida['user_id'] }}  <button id="button-excluir-medidas" onclick="excluirMedidas('{{ medida['id'] }}')">
+                            <img src="\static\trash.svg">
                         </button>
-                </li>
-            {% endfor %}
-        </ul>
+                        <br>
+                        Data: {{ medida['date'] }} <br>
+                        Altura: {{ medida['altura'] }} <br>
+                        Peso: {{ medida['peso'] }} <br>
+                        <!-- Adicione outros campos de medida conforme necessário -->
+                       
+                    </li>
+                {% endfor %}
+            </ul>
+            
         </div>
         
         
@@ -84,36 +99,73 @@
 
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <script>
-        google.charts.load('current', { packages: ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-    
-        function drawChart() {
-          // Defina os dados do gráfico.
-          var data = new google.visualization.DataTable();
-          data.addColumn('string', 'Data');
-          data.addColumn('number', 'Peso');
+<script>
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
 
-          data.addRows([
-            {% for row in medidas_corporais %}
-                    ['{{ row['date'] }}', {{ row['weight'] }}],
-                {% endfor %}
-          ]);
-    
-          // Opções do gráfico
-            var options = {
-                hAxis: {
-                // Defina a opção para não mostrar rótulos de datas
-                // showTextEvery: 99999, // Um valor grande para evitar a exibição de rótulos
-                textPosition: 'none',
-                },
-            };
+    function drawChart() {
+      // Defina os dados do gráfico.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Data');
+      data.addColumn('number', 'Peso');
+      var selectedItem = document.getElementById("select-item").value;
 
-          // Instancie e desenhe o gráfico.
-          var chart = new google.visualization.LineChart(document.getElementById('myChartMedidas'));
-          chart.draw(data, options);
-        }
-      </script>
+
+      data.addRows([
+        {% for row in medidas %}
+                ['{{ row['date'] }}', {{ row['circunferencia_braco'] }}],
+            {% endfor %}
+      ]);
+
+      // Opções do gráfico
+        var options = {
+            hAxis: {
+            // Defina a opção para não mostrar rótulos de datas
+            // showTextEvery: 99999, // Um valor grande para evitar a exibição de rótulos
+            textPosition: 'none',
+            },
+        };
+
+      // Instancie e desenhe o gráfico.
+      var chart = new google.visualization.LineChart(document.getElementById('myChartMedidas'));
+      chart.draw(data, options);
+    }
+  </script>
+
+<script>
+    function updateChart() {
+        var selectedItem = document.getElementById("select-item").value;
+
+        // Faça uma solicitação AJAX para obter os dados específicos do banco de dados para o item selecionado
+        fetch(`/get_medidas_data/${selectedItem}`)
+            .then(response => response.json())
+            .then(data => {
+                // Defina os dados do gráfico com base nos dados recebidos
+                var chartData = new google.visualization.DataTable();
+                chartData.addColumn('string', 'Data');
+                chartData.addColumn('number', selectedItem.charAt(0).toUpperCase() + selectedItem.slice(1));
+
+                data.forEach(row => {
+                    chartData.addRow([row.date, row[selectedItem]]);
+                });
+
+                // Opções do gráfico
+                var options = {
+                    hAxis: {
+                        textPosition: 'none',
+                    },
+                };
+
+                // Instancie e desenhe o gráfico.
+                var chart = new google.visualization.LineChart(document.getElementById('myChartMedidas'));
+                chart.draw(chartData, options);
+            })
+            .catch(error => console.error('Erro ao obter dados:', error));
+    }
+
+    // Carregue o gráfico inicialmente
+    google.charts.setOnLoadCallback(updateChart);
+</script>
 
 
 </body>

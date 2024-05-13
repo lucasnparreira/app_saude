@@ -248,7 +248,7 @@ def exibir_medidas():
     user_id = None
     db = get_db()
     user_id = session.get('user_id')
-    medidas = db.execute('SELECT * FROM medidas_corporais where user_id = ? ORDER BY date asc', (user_id,)).fetchall()
+    medidas = db.execute('SELECT * FROM medidas_corporais where user_id = ? ORDER BY date ASC', (user_id,)).fetchall()
     return render_template('exibir_medidas.html', medidas=medidas, user_id = user_id)
 
 @app.route('/excluir_medidas/<int:medidas_id>', methods=['DELETE'])
@@ -258,6 +258,26 @@ def excluir_medidas(medidas_id):
     db.execute('DELETE FROM medidas_corporais WHERE id = ?', (medidas_id,))
     db.commit()
     return 'Medidas excluídas com sucesso', 204
+
+from flask import jsonify
+
+@app.route('/get_medidas_data/<item>', methods=['GET'])
+def get_medidas_data(item):
+    # Verifique se o item é válido para evitar injeção de SQL
+    valid_items = ['peso', 'altura', 'date', 'circunferencia_braco']  # Adicione outros itens conforme necessário
+    if item not in valid_items:
+        return jsonify({'error': 'Item inválido'}), 400
+
+    user_id = session.get('user_id')
+    if user_id is None:
+        return jsonify({'error': 'Usuário não autenticado'}), 401
+
+    db = get_db()
+    medidas = db.execute(f"SELECT date, {item} FROM medidas_corporais WHERE user_id = ? ORDER BY date ASC", (user_id,)).fetchall()
+    data = [{'date': row['date'], item: row[item]} for row in medidas]
+
+    return jsonify(data)
+
 
 if __name__ == '__main__':
     app.run(debug = True)
