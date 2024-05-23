@@ -1,10 +1,10 @@
 import unittest
 from unittest.mock import patch
-from app import app
+from app import main
 
 class TestApp(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = main.test_client()
 
     def test_index_route(self):
         response = self.app.get('/')

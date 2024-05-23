@@ -7,14 +7,24 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, session, url_for, g
 #from flask_login import LoginManager, UserMixin, current_user, login_required
 
-app = Flask(__name__)
-app.config['DATABASE'] = 'database.db'
-DATABASE = 'database.db'
+# app = Flask(__name__)
+# app.config['DATABASE'] = 'database.db'
+# DATABASE = 'database.db'
 
-template_dir = os.path.abspath('templates')
-app.template_folder = template_dir
+# template_dir = os.path.abspath('templates')
+# app.template_folder = template_dir
 
-app.secret_key = 'your_secret_key_here'
+# app.secret_key = 'your_secret_key_here'
+
+def create_app():
+    app = Flask(__name__)
+    app.config['DATABASE'] = 'database.db'
+    template_dir = os.path.abspath('templates')
+    app.template_folder = template_dir
+    app.secret_key = 'your_secret_key_here'
+    return app
+
+app = create_app()
 
 #login_manager = LoginManager(app)
 # login_manager.login_view = 'login'
