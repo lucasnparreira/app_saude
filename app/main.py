@@ -22,9 +22,11 @@ def create_app():
     template_dir = os.path.abspath('templates')
     app.template_folder = template_dir
     app.secret_key = 'your_secret_key_here'
+    
     return app
 
 app = create_app()
+DATABASE = 'database.db'
 
 #login_manager = LoginManager(app)
 # login_manager.login_view = 'login'
@@ -41,14 +43,14 @@ app = create_app()
 #     # Substitua esta linha pela lógica real para carregar um usuário do seu banco de dados
 #     return User(user_id)
 
-app.config['DATABASE'] = 'database.db'
-DATABASE = 'database.db'
+# app.config['DATABASE'] = 'database.db'
 
-template_dir = os.path.abspath('templates')
-app.template_folder = template_dir
+
+# template_dir = os.path.abspath('templates')
+# app.template_folder = template_dir
 
 #app.config.from_pyfile = 'app\config.py'
-app.secret_key = 'your_secret_key_here'
+# app.secret_key = 'your_secret_key_here'
 
 @app.route('/')
 def index():
