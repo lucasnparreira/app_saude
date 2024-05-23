@@ -300,6 +300,13 @@ body {
     text-align: center;
 }
 
+#mensagem-erro-login {
+  padding-left: 30%;
+  padding-right: 40%;
+  justify-content: center;
+  color: red;
+}
+
 @media only screen and (max-width: 768px){
     body {
         font-size: small;
@@ -385,5 +392,12 @@ body {
         padding-bottom: 40%;
         display: flex;
         justify-content: center;
+      }
+
+      #mensagem-erro-login {
+        padding-left: 30%;
+        padding-right: 30%;
+        justify-content: center;
+        color: red;
       }
 }

@@ -44,9 +44,14 @@
             <input type="text" name="username" placeholder="Nome de Usuário" required>
             <input type="password" name="password" placeholder="Senha" required>
             <button type="submit" id="button-login">Entrar</button>
-        </form>
+        </form>   
     </div>
-
+    <div id="mensagem-erro-login"> 
+        {% if msg %}
+        <br>
+        <p class="error-message">{{ msg }}</p>
+    {% endif %}
+    </div>
     <footer class="footer">
         <div class="container">
             <p>&copy; Saude & Bem-estar. Todos os direitos reservados.</p>

@@ -79,7 +79,7 @@ def calculate_imc():
 #@login_required
 def healthy_food():
     # Carregue os dados do arquivo data.json
-    with open('templates\data.json', 'r') as arquivo_json:
+    with open('templates/data.json', 'r') as arquivo_json:
         dados = json.load(arquivo_json)
 
         
@@ -208,21 +208,26 @@ def login():
             msg = 'Logged in successfully!'
             return render_template('index.html', msg=msg)
         else:
-            msg = 'Incorrect username/password!'
+            # Verificar se o usuário existe
+            cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
+            existing_user = cursor.fetchone()
+            if existing_user:
+                msg = 'Senha incorreta!'
+            else:
+                msg = 'Usuario nao cadastrado!'
             return render_template('login.html', msg=msg)
 
     return render_template('login.html', msg=msg)
 
+
 def get_user_id_from_database(username, password):
-    """
-    Retorna o ID do usuário com base no nome de usuário e senha fornecidos.
-    """
-    db = get_db()  # Suponha que você já tenha uma função get_db() para obter a conexão com o banco de dados
-    user_data = db.execute('SELECT id FROM users WHERE username = ? AND password = ?', (username, password)).fetchone()
+    cursor = get_db().cursor()
+    cursor.execute("SELECT id FROM users WHERE username = ? AND password = ?", (username, password))
+    user_data = cursor.fetchone()
     if user_data:
-        return user_data['id']
+        return user_data[0]
     else:
-        return None  # Retorna None se as credenciais não forem válidas
+        return None
 
 @app.route('/logout')
 def logout():
